@@ -27,7 +27,7 @@ get_batch_options() {
 
         case ${argument} in
             --Njobs=*)
-                command_line_specified_njobs_folder=${argument/*=/""}
+                command_line_specified_njobs=${argument/*=/""}
                 index=$(( index + 1 ))
 		;;
             --StudyFolder=*)
