@@ -1,5 +1,15 @@
 #!/bin/bash 
 
+
+help () {
+    echo
+    echo "fMRIVolume example pipeline."
+    echo "Example Usage:"
+    echo "$0 --OutputFolder=/storage/workspace/elvis/HCP_MICCAI_FINAL --StudyFolder=/storage/data/HCP/S500-1 --Njobs=2"
+    exit 0
+}
+
+
 get_batch_options() {
     # Function to parse command line arguments and options.
     local arguments=($@)
@@ -28,6 +38,9 @@ get_batch_options() {
                 command_line_specified_output_folder=${argument/*=/""}
                 index=$(( index + 1 ))
                 ;;
+	    --help)
+		help
+		;;
 	    *)
 		echo ""
 		echo "ERROR: Unrecognized Option: ${argument}"

@@ -18,20 +18,12 @@ export FSL_DIR="${FSLDIR}"
 
 # Set up specific environment variables for the HCP Pipeline
 export HCPPIPEDIR=$(dirname $(dirname $(dirname $0)))
-export CARET7DIR=${HOME}/tools/workbench/bin_rh_linux64
 
 export HCPPIPEDIR_Templates=${HCPPIPEDIR}/global/templates
 export HCPPIPEDIR_Bin=${HCPPIPEDIR}/global/binaries
 export HCPPIPEDIR_Config=${HCPPIPEDIR}/global/config
 
-export HCPPIPEDIR_PreFS=${HCPPIPEDIR}/PreFreeSurfer/scripts
-export HCPPIPEDIR_FS=${HCPPIPEDIR}/FreeSurfer/scripts
-export HCPPIPEDIR_PostFS=${HCPPIPEDIR}/PostFreeSurfer/scripts
 export HCPPIPEDIR_fMRISurf=${HCPPIPEDIR}/fMRISurface/scripts
 export HCPPIPEDIR_fMRIVol=${HCPPIPEDIR}/fMRIVolume/scripts
 export HCPPIPEDIR_tfMRI=${HCPPIPEDIR}/tfMRI/scripts
-export HCPPIPEDIR_dMRI=${HCPPIPEDIR}/DiffusionPreprocessing/scripts
-export HCPPIPEDIR_dMRITract=${HCPPIPEDIR}/DiffusionTractography/scripts
 export HCPPIPEDIR_Global=${HCPPIPEDIR}/global/scripts
-export HCPPIPEDIR_tfMRIAnalysis=${HCPPIPEDIR}/TaskfMRIAnalysis/scripts
-export MSMBin=${HCPPIPEDIR}/MSMBinaries
