@@ -75,7 +75,6 @@ JacobianIn=`getopt1 "--jacobianin" $@`  # "${17}"
 
 echo " "
 echo " START: OneStepResampling"
-fslview ${OutputfMRI}&
 
 mkdir -p $WD
 
@@ -124,12 +123,14 @@ while [ $k -lt $NumFrames ] ; do
   FrameMergeSTRING="${FrameMergeSTRING}${WD}/postvols/vol${k}.nii.gz " 
   FrameMergeSTRINGII="${FrameMergeSTRINGII}${WD}/postvols/vol${k}_mask.nii.gz " 
   k=`echo "$k + 1" | bc`
+  echo ${WD}/postvols/vol${k}.nii.gz
 done
 # Merge together results and restore the TR (saved beforehand)
 fslmerge -tr ${OutputfMRI} $FrameMergeSTRING $TR_vol
 fslmerge -tr ${OutputfMRI}_mask $FrameMergeSTRINGII $TR_vol
 fslmaths ${OutputfMRI}_mask -Tmin ${OutputfMRI}_mask
-fslview ${OutputfMRI}
+echo $${OutputfMRI}
+fslview ${OutputfMRI}&
 echo " "
 echo "END: OneStepResampling"
 echo " END: `date`" >> $WD/log.txt

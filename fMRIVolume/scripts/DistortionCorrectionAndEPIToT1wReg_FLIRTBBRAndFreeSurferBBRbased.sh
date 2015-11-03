@@ -119,7 +119,7 @@ dof=`getopt1 "--dof" $@`
 ScoutInputFile=`basename $ScoutInputName`
 
 # default parameters
-RegOutput=`$FSLDIR/bin/remove_ext $RegOutput`
+RegOutput=`remove_ext $RegOutput`
 WD=`defaultopt $WD ${RegOutput}.wdir`
 dof=`defaultopt $dof 6`
 GlobalScripts=${HCPPIPEDIR_Global}
@@ -158,12 +158,12 @@ ${GlobalScripts}/TopupPreprocessingAll.sh \
 
 # create a spline interpolated image of scout (distortion corrected in same space)
 log_Msg "create a spline interpolated image of scout (distortion corrected in same space)"
-${FSLDIR}/bin/applywarp --rel --interp=spline -i ${ScoutInputName} -r ${ScoutInputName} -w ${WD}/WarpField.nii.gz -o ${WD}/${ScoutInputFile}_undistorted
+applywarp --rel --interp=spline -i ${ScoutInputName} -r ${ScoutInputName} -w ${WD}/WarpField.nii.gz -o ${WD}/${ScoutInputFile}_undistorted
 
 # apply Jacobian correction to scout image (optional)
 if [ $UseJacobian = true ] ; then
     log_Msg "apply Jacobian correction to scout image"
-    ${FSLDIR}/bin/fslmaths ${WD}/${ScoutInputFile}_undistorted -mul ${WD}/Jacobian.nii.gz ${WD}/${ScoutInputFile}_undistorted
+    fslmaths ${WD}/${ScoutInputFile}_undistorted -mul ${WD}/Jacobian.nii.gz ${WD}/${ScoutInputFile}_undistorted
 fi
 
 log_Msg "cp ${WD}/${ScoutInputFile}_undistorted.nii.gz ${RegOutput}.nii.gz"
@@ -172,13 +172,14 @@ cp ${WD}/${ScoutInputFile}_undistorted.nii.gz ${RegOutput}.nii.gz
 OutputTransformDir=$(dirname ${OutputTransform})
 mkdir -p ${OutputTransformDir}
 
-log_Msg "cp ${WD}/${ScoutInputFile}_undistorted_warp.nii.gz ${OutputTransform}.nii.gz"
-cp ${WD}/${ScoutInputFile}_undistorted_warp.nii.gz ${OutputTransform}.nii.gz
+log_Msg "cp ${WD}/WarpField.nii.gz ${OutputTransform}.nii.gz"
+cp ${WD}/WarpField.nii.gz ${OutputTransform}.nii.gz
 
 log_Msg "cp ${WD}/Jacobian.nii.gz ${JacobianOut}.nii.gz"
 cp ${WD}/Jacobian.nii.gz ${JacobianOut}.nii.gz
 
-echo "${RegOutput}  ${OutputTransform}  ${JacobianOut}"
+# QA
+fslview ${ScoutInputName} ${WD}/${ScoutInputFile}_undistorted&
 
 log_Msg "END"
 echo " END: `date`" >> $WD/log.txt

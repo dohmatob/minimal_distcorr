@@ -78,14 +78,14 @@ PhaseEncodinglist=""
 Tasklist="${Tasklist} tfMRI_EMOTION_RL"
 PhaseEncodinglist="${PhaseEncodinglist} x"
 
-Tasklist="${Tasklist} tfMRI_EMOTION_LR"
-PhaseEncodinglist="${PhaseEncodinglist} x-"
+# Tasklist="${Tasklist} tfMRI_EMOTION_LR"
+# PhaseEncodinglist="${PhaseEncodinglist} x-"
 
-Tasklist="${Tasklist} tfMRI_MOTOR_RL"
-PhaseEncodinglist="${PhaseEncodinglist} x"
+# Tasklist="${Tasklist} tfMRI_MOTOR_RL"
+# PhaseEncodinglist="${PhaseEncodinglist} x"
 
-Tasklist="${Tasklist} tfMRI_MOTOR_LR"
-PhaseEncodinglist="${PhaseEncodinglist} x-"
+# Tasklist="${Tasklist} tfMRI_MOTOR_LR"
+# PhaseEncodinglist="${PhaseEncodinglist} x-"
 
 # Verify that Tasklist and PhaseEncodinglist have the same number of elements
 TaskArray=($Tasklist)

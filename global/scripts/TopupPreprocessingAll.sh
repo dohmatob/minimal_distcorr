@@ -98,6 +98,7 @@ GlobalScripts=${HCPPIPEDIR_Global}
 #WD=`defaultopt $WD ${DistortionCorrectionWarpFieldOutput}.wdir`
 
 log_Msg "START: Topup Field Map Generation and Gradient Unwarping"
+exit 0
 
 mkdir -p $WD
 
