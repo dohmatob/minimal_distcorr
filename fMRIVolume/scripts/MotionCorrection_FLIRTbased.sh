@@ -13,7 +13,6 @@ source $HCPPIPEDIR_Global/log.shlib # Logging related functions
 
 log_SetToolName "MotionCorrection_FLIRTBased.sh"
 log_Msg "START"
-exit 0
 
 WorkingDirectory="$1"
 InputfMRI="$2"

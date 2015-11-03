@@ -129,7 +129,6 @@ done
 fslmerge -tr ${OutputfMRI} $FrameMergeSTRING $TR_vol
 fslmerge -tr ${OutputfMRI}_mask $FrameMergeSTRINGII $TR_vol
 fslmaths ${OutputfMRI}_mask -Tmin ${OutputfMRI}_mask
-echo $${OutputfMRI}
 fslview ${OutputfMRI}&
 echo " "
 echo "END: OneStepResampling"

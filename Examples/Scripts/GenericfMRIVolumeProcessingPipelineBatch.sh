@@ -28,10 +28,6 @@ get_batch_options() {
                 command_line_specified_subj_list=${argument/*=/""}
                 index=$(( index + 1 ))
                 ;;
-            --runlocal)
-                command_line_specified_run_local="TRUE"
-                index=$(( index + 1 ))
-                ;;
 	    *)
 		echo ""
 		echo "ERROR: Unrecognized Option: ${argument}"
@@ -65,8 +61,6 @@ fi
 # Log the originating call
 echo "$@"
 
-QUEUE="-q hcp_priority.q"
-
 PRINTCOM=""
 
 # The PhaseEncodinglist contains phase encoding direction indicators for each corresponding
@@ -75,17 +69,17 @@ PRINTCOM=""
 Tasklist=""
 PhaseEncodinglist=""
 
+Tasklist="${Tasklist} tfMRI_MOTOR_RL"
+PhaseEncodinglist="${PhaseEncodinglist} x"
+
+Tasklist="${Tasklist} tfMRI_MOTOR_LR"
+PhaseEncodinglist="${PhaseEncodinglist} x-"
+
 Tasklist="${Tasklist} tfMRI_EMOTION_RL"
 PhaseEncodinglist="${PhaseEncodinglist} x"
 
-# Tasklist="${Tasklist} tfMRI_EMOTION_LR"
-# PhaseEncodinglist="${PhaseEncodinglist} x-"
-
-# Tasklist="${Tasklist} tfMRI_MOTOR_RL"
-# PhaseEncodinglist="${PhaseEncodinglist} x"
-
-# Tasklist="${Tasklist} tfMRI_MOTOR_LR"
-# PhaseEncodinglist="${PhaseEncodinglist} x-"
+Tasklist="${Tasklist} tfMRI_EMOTION_LR"
+PhaseEncodinglist="${PhaseEncodinglist} x-"
 
 # Verify that Tasklist and PhaseEncodinglist have the same number of elements
 TaskArray=($Tasklist)
@@ -125,15 +119,7 @@ for Subject in $Subjlist ; do
     GradientDistortionCoeffs="NONE"
     TopUpConfig="${HCPPIPEDIR_Config}/b02b0.cnf"
 
-    if [ -n "${command_line_specified_run_local}" ] ; then
-        echo "About to run ${HCPPIPEDIR}/fMRIVolume/GenericfMRIVolumeProcessingPipeline.sh"
-        queuing_command=""
-    else
-        echo "About to use fsl_sub to queue or run ${HCPPIPEDIR}/fMRIVolume/GenericfMRIVolumeProcessingPipeline.sh"
-        queuing_command="${FSLDIR}/bin/fsl_sub ${QUEUE}"
-    fi
-
-    ${queuing_command} ${HCPPIPEDIR}/fMRIVolume/GenericfMRIVolumeProcessingPipeline.sh \
+    cmd="${queuing_command} ${HCPPIPEDIR}/fMRIVolume/GenericfMRIVolumeProcessingPipeline.sh \
       --path=$OutputFolder \
       --subject=$Subject \
       --fmriname=$fMRIName \
@@ -150,29 +136,10 @@ for Subject in $Subjlist ; do
       --fmrires=$FinalFMRIResolution \
       --gdcoeffs=$GradientDistortionCoeffs \
       --topupconfig=$TopUpConfig \
-      --printcom=$PRINTCOM
-
-  # The following lines are used for interactive debugging to set the positional parameters: $1 $2 $3 ...
-  echo "set -- --path=$OutputFolder \
-      --subject=$Subject \
-      --fmriname=$fMRIName \
-      --fmritcs=$fMRITimeSeries \
-      --fmriscout=$fMRISBRef \
-      --SEPhaseNeg=$SpinEchoPhaseEncodeNegative \
-      --SEPhasePos=$SpinEchoPhaseEncodePositive \
-      --fmapmag=$MagnitudeInputName \
-      --fmapphase=$PhaseInputName \
-      --fmapgeneralelectric=$GEB0InputName \
-      --echospacing=$DwellTime \
-      --echodiff=$DeltaTE \
-      --unwarpdir=$UnwarpDir \
-      --fmrires=$FinalFMRIResolution \
-      --dcmethod=$DistortionCorrection \
-      --gdcoeffs=$GradientDistortionCoeffs \
-      --topupconfig=$TopUpConfig \
       --printcom=$PRINTCOM"
 
-  echo ". ${EnvironmentScript}"
+  # The following lines are used for interactive debugging to set the positional parameters: $1 $2 $3 ...
+    echo ${cmd}
 	
     i=$(($i+1))
   done
