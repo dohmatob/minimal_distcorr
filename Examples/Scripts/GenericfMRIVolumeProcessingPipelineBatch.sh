@@ -134,7 +134,7 @@ for Subject in $Subjlist ; do
     fi
 
     ${queuing_command} ${HCPPIPEDIR}/fMRIVolume/GenericfMRIVolumeProcessingPipeline.sh \
-      --path=$StudyFolder \
+      --path=$OutputFolder \
       --subject=$Subject \
       --fmriname=$fMRIName \
       --fmritcs=$fMRITimeSeries \
@@ -153,7 +153,7 @@ for Subject in $Subjlist ; do
       --printcom=$PRINTCOM
 
   # The following lines are used for interactive debugging to set the positional parameters: $1 $2 $3 ...
-  echo "set -- --path=$StudyFolder \
+  echo "set -- --path=$OutputFolder \
       --subject=$Subject \
       --fmriname=$fMRIName \
       --fmritcs=$fMRITimeSeries \

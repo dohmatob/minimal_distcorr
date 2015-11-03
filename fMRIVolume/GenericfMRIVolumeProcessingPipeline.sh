@@ -91,10 +91,7 @@ JacobianOut="${OutputTransform}_jacobian"
 ########################################## DO WORK ########################################## 
 
 fMRIFolder="$Path"/"$Subject"/"$NameOffMRI"
-if [ ! -e "$fMRIFolder" ] ; then
-  log_Msg "mkdir ${fMRIFolder}"
-  mkdir "$fMRIFolder"
-fi
+mkdir -p "$fMRIFolder"
 cp "$fMRITimeSeries" "$fMRIFolder"/"$OrigTCSName".nii.gz
 
 #Create fake "Scout" if it doesn't exist
